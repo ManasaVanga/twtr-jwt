@@ -98,7 +98,7 @@ const Compose = () => {
       }
       //const response = await fetch("http://localhost:5000/tweet", config);
       // const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
-      const response = await fetch(`http://flask-react-alb-1099811801.us-east-1.elb.amazonaws.com/tweet`, config);
+      const response = await fetch(`${process.env.REACT_APP_API_SERVICE_URL}/tweet`, config);
       //const json = await response.json()
       if (response.ok) {
           //return json
