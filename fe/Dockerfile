@@ -6,10 +6,10 @@
 FROM node:15.2.0-alpine as builder
 
 # set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # add /usr/src/app/node_modules/.bin to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json .
@@ -24,7 +24,7 @@ ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
 # create build
-COPY . ./
+COPY . .
 RUN npm run build
 
 #########
@@ -32,14 +32,14 @@ RUN npm run build
 #########
 
 # base image
-FROM nginx
+FROM nginx:alpine
 
 # update nginx conf
 #RUN rm -rf /etc/nginx/conf.d
 #COPY conf /etc/nginx
 
 # copy static files
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # expose port
 EXPOSE 80
